@@ -17,6 +17,15 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "noImplicitAny": true,
+    "paths": {
+      "ang-slider": [
+        "dist/ang-slider"
+      ],
+      "ang-slider/*": [
+        "dist/ang-slider/*"
+      ]
+    }
   }
 }

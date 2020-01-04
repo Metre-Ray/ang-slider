@@ -1,0 +1,32 @@
+<div class="slider"
+  (click)="disabled ? empty() : onSliderClick($event)"
+  (keydown)="disabled ? empty() : onKeyDown($event)"
+  (window:resize)="onWindowResize()"
+  tabindex="0"
+  role="slider"
+  aria-label="config.ariaLabel || 'slider'"
+  aria-valuemin="config.min"
+  aria-valuemax="config.max"
+  aria-valuenow="value">
+  <div
+    class="thumb"
+    (mousedown)="disabled ? empty() : onMouseDown($event)"
+  ></div>
+  <div class="tooltip" *ngIf="config.enableTooltip">
+    <div class="tooltip-text">
+      {{tooltipLabel}}
+    </div>
+  </div>
+  <div class="slider-fill"></div>
+  <div class="border-labels" *ngIf="config.showBorderValues">
+    <div class="border-left-label">{{config.min}}</div>
+    <div class="border-right-label">{{config.max}}</div>
+  </div>
+  <div></div>
+  <div class="ticks-container" *ngIf="config.enableTicks">
+    <div class="tick" *ngFor="let tick of (tickLabels || ticksArray)"></div>
+  </div>
+  <div class="labels-container" *ngIf="config.enableTickLabels">
+    <div class="tick-label" *ngFor="let tick of tickLabels">{{tick}}</div>
+  </div>
+</div>
