@@ -4,7 +4,10 @@ Slider built with Angular 8.
 
 This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.14.
 
+
 ## Examples
+
+https://stackblitz.com/edit/angular-vdwzit
 
 
 ## Parameters and events
@@ -22,10 +25,10 @@ This library was generated with [Angular CLI](https://github.com/angular/angular
 | `value`       | number      |                   | value on slider
 
 `config` interface: 
-```
+```typescript
 interface Config {
-  min: number;
-  max: number;
+  min?: number;
+  max?: number;
   height?: number;
   width?: number;
   fillColor?: string;
@@ -38,7 +41,6 @@ interface Config {
   enableTicks?: boolean;
   enableTickLabels?: boolean;
   tickNumber?: number;
-  tickLabels?: string[];
   showTooltipOnSlide?: boolean;
   showBorderValues?: boolean;
   disabled?: boolean;
@@ -47,7 +49,7 @@ interface Config {
 ```
 
 Default `config`:
-```
+```typescript
 {
   min: 0,
   max: 100,
@@ -70,18 +72,12 @@ Default `config`:
 You can use two-way data binding for `value`: `[(value)]="someValue"`.
 
 
-### Required
-  TODO
-
-### Optional
-  TODO
-
 ## Setting styles
 
 Parameters in `config` are more important than styles.
 
 Example of setting colors of the fill and the thumb (but to apply this styles you need fillColor and backgroundColor in config to be empty rows):
-```
+```scss
 ang-slider::ng-deep {
   .thumb {
     background-color: blue;
@@ -92,23 +88,9 @@ ang-slider::ng-deep {
 }
 ```
 
+Available classes: `slider`, `thumb`, `tootlip`, `tooltip-text`, `slider-fill`, `ticks-container`, `tick`, `labels-container`, `tick-label`, `disabled`.
+
 ## Notes
 
 For custom thumb use styles and thumbType: 'custom'.
 In case of angles 90 or -90 height of the slider is determined by width of the slider.
-
-
-Further is default info from angular.
-
-## Code scaffolding
-
-Run `ng generate component component-name --project ang-slider` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ang-slider`.
-> Note: Don't forget to add `--project ang-slider` or else it will be added to the default project in your `angular.json` file. 
-
-## Build
-
-Run `ng build ang-slider` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Publishing
-
-After building your library with `ng build ang-slider`, go to the dist folder `cd dist/ang-slider` and run `npm publish`.
