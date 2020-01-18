@@ -10,6 +10,31 @@ This library was generated with [Angular CLI](https://github.com/angular/angular
 https://stackblitz.com/edit/angular-vdwzit
 
 
+## Installation and use
+
+To install package run `npm i ang-slider`.
+
+Example of usage:
+```typescript
+import { AngSliderComponent } from 'ang-slider';
+
+@NgModule({
+  imports:      [],
+  declarations: [ AppComponent, AngSliderComponent ],
+  bootstrap:    [ AppComponent ]
+})
+export class AppModule { }
+```
+
+```html
+<ang-slider
+  [(value)]="value"
+  [config]="config"
+  [getTooltipLabel]="getTooltipLabel"
+  [disabled]="disabled"
+></ang-slider>
+```
+
 ## Parameters and events
 
 ### Input parameters
@@ -23,6 +48,7 @@ https://stackblitz.com/edit/angular-vdwzit
 | `getTooltipLabel` | function|                   | function which gets value from slider as input and returns string which will be used as tooltip label
 | `tickLabels`  | string[]    |                   | tick labels
 | `value`       | number      |                   | value on slider
+&nbsp;
 
 `config` interface: 
 ```typescript
@@ -93,4 +119,5 @@ Available classes: `slider`, `thumb`, `tootlip`, `tooltip-text`, `slider-fill`, 
 ## Notes
 
 For custom thumb use styles and thumbType: 'custom'.
+
 In case of angles 90 or -90 height of the slider is determined by width of the slider.
