@@ -17,3 +17,13 @@ ang-slider {
   display: block;
   margin-top: 100px;
 }
+
+ang-slider.with-config::ng-deep {
+  .ticks-container {
+    top: -2px;
+
+    .tick {
+      height: 8px;
+    }
+  }
+}

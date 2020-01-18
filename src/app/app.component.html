@@ -1,23 +1,48 @@
 <button (click)="onButtonClick()">Set position to 300</button>
 <button (click)="onButtonClick2()">Show value2</button>
 <button (click)="onButtonClick3()">Set value2 to 17</button>
+<button (click)="onDisable()">Enable/disable</button>
 <div class="slider-container">
   <ang-slider
-    [value]="value"
+    [value]="value2"
     [getTooltipLabel]="getTooltipLabel"
+    [disabled]="disabled"
+    [config]="{
+      tooltipType: 'custom'
+    }"
     (change)="onChange($event)"
     (slide)="onSlide($event)"
+  ></ang-slider>
+</div>
+<div class="slider-container">
+  <ang-slider
+    [config]="{
+      min: 100,
+      max: 0
+    }"
+    [value]="value2"
+    (slide)="onSlide($event)"
+  ></ang-slider>
+</div>
+
+<p>
+  With config and some styles:
+</p>
+<div class="container">
+  <ang-slider
+    [config]="config1"
+    class="with-config"
   ></ang-slider>
 </div>
 
 <ang-slider
   [(value)]="value2"
-  [config]="config1"
+  [config]="config2"
   [degree]="-45"
   ></ang-slider>
 
 <ang-slider
-  [config]="config1"
+  [config]="config2"
   [degree]="45"
 ></ang-slider>
 

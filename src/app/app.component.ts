@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Config, ThumbTypes, TooltipTypes } from 'projects/ang-slider/src/lib/ang-slider.component';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  public config1 = {
-    width: 200,
-  };
+  public disabled = false;
 
   public config = {
     min: 0,
@@ -24,6 +23,27 @@ export class AppComponent {
     enableTooltip: true,
     enableTicks: true,
   };
+  public config1: Config = {
+    min: 55,
+    max: 150,
+    height: 10,
+    width: 300,
+    fillColor: '#a50000',
+    backgroundColor: '#ffa5a5',
+    thumbWidth: 14,
+    thumbHeight: 14,
+    thumbType: ThumbTypes.Circle,
+    tooltipType: TooltipTypes.Balloon,
+    enableTooltip: true,
+    enableTicks: true,
+    enableTickLabels: false,
+    tickNumber: 10,
+    showTooltipOnSlide: true,
+    ariaLabel: 'slider with config',
+  };
+  public config2 = {
+    width: 200,
+  };
   public value: number;
   public label: string;
   public value2: number;
@@ -33,7 +53,7 @@ export class AppComponent {
   }
 
   public onButtonClick3() {
-    this.value2 = 17;
+    this.value2 = 105;
   }
 
   public onButtonClick2() {
@@ -52,5 +72,9 @@ export class AppComponent {
 
   public getTooltipLabel(val: number) {
     return `$${Math.round(val)}`;
+  }
+
+  public onDisable() {
+    this.disabled = !this.disabled;
   }
 }
