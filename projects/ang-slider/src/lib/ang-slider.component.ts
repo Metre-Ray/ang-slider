@@ -12,14 +12,14 @@ import {
   AfterViewInit
 } from '@angular/core';
 
-enum TooltipTypes {
+export enum TooltipTypes {
   Rect = 'rectangle',
   Balloon = 'balloon',
   Text = 'text',
   Custom = 'custom',
 }
 
-enum ThumbTypes {
+export enum ThumbTypes {
   Rect = 'rectangle',
   Circle = 'circle',
   Square = 'square',
@@ -27,7 +27,7 @@ enum ThumbTypes {
   None = 'none',
 }
 
-interface Config {
+export interface Config {
   min?: number;
   max?: number;
   height?: number;
@@ -44,7 +44,6 @@ interface Config {
   tickNumber?: number;
   tickStep?: number;  // TODO
   tickPositions?: number[]; // TODO
-  tickLabels?: string[];
   showTooltipOnSlide?: boolean;
   showBorderValues?: boolean;
   sliderStyle?: string; // TODO
@@ -62,7 +61,6 @@ const defaultConfig: Config = {
   tooltipType: TooltipTypes.Rect,
   thumbType: ThumbTypes.Rect,
 };
-
 
 @Component({
   selector: 'ang-slider',
@@ -100,7 +98,7 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
   ) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.value && changes.value.previousValue !== this.value) {
+    if (changes.value && changes.value.previousValue !== this.value && this.slider) {
       this.setSliderPositionFromValue(this.value, false);
     }
     if (changes.config) {
@@ -108,6 +106,9 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
       if (this.slider) {
         this.setStylesFromConfig();
       }
+    }
+    if (changes.disabled !== undefined && this.slider) {
+      this.disable();
     }
   }
 
@@ -373,26 +374,16 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     }
     if (this.config.width) {
       this.renderer.setStyle(this.slider, 'width', `${this.config.width}px`);
-      // this.renderer.setStyle(this.ticksContainer, 'width', `${this.config.width}px`);
     }
     if (this.config.thumbWidth) {
       this.renderer.setStyle(this.thumb, 'width', `${this.config.thumbWidth}px`);
     }
     if (this.config.thumbHeight) {
       this.renderer.setStyle(this.thumb, 'height', `${this.config.thumbHeight}px`);
-      this.renderer.setStyle(this.thumb, 'top', `-${this.config.thumbHeight / 2 - this.slider.clientHeight / 2}px`);
+      this.renderer.setStyle(this.thumb, 'top', `-${this.thumb.offsetHeight / 2 - this.slider.clientHeight / 2}px`);
       if (this.config.enableTooltip) {
         this.renderer.setStyle(this.tooltip, 'top', `-${this.config.thumbHeight / 2 - this.slider.clientHeight / 2 + 27}px`);
       }
-    }
-    if (this.config.fillColor && !this.disabled) {
-      if (this.config.thumbType !== ThumbTypes.Custom) {
-        this.renderer.setStyle(this.thumb, 'background-color', this.config.fillColor);
-      }
-      this.renderer.setStyle(this.fill, 'background-color', this.config.fillColor);
-    }
-    if (this.config.backgroundColor && !this.disabled) {
-      this.renderer.setStyle(this.slider, 'background-color', this.config.backgroundColor);
     }
     if (this.tickLabels && this.config.enableTickLabels) {
       const labelWidth = (this.slider.clientWidth) / (this.tickLabels.length - 1);
@@ -407,6 +398,7 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     if (this.config.showTooltipOnSlide) {
       this.renderer.addClass(this.thumb, 'show-on-slide');
     }
+    this.setColors();
     this.setThumbType();
     this.setDegree();
   }
@@ -425,7 +417,22 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
   //   return this.value;
   // }
 
-  private setThumbType(): void {
+  private setColors() {
+    if (this.config.fillColor && !this.disabled) {
+      if (this.config.thumbType !== ThumbTypes.Custom) {
+        this.renderer.setStyle(this.thumb, 'background-color', this.config.fillColor);
+      }
+      if (this.tooltip && (this.config.tooltipType === TooltipTypes.Rect || this.config.tooltipType === TooltipTypes.Balloon)) {
+        this.renderer.setStyle(this.tooltip, 'background-color', this.config.fillColor);
+      }
+      this.renderer.setStyle(this.fill, 'background-color', this.config.fillColor);
+    }
+    if (this.config.backgroundColor && !this.disabled) {
+      this.renderer.setStyle(this.slider, 'background-color', this.config.backgroundColor);
+    }
+  }
+
+  private setThumbType() {
     if (this.config.thumbType) {
       switch (this.config.thumbType) {
         case ThumbTypes.Circle:
@@ -447,15 +454,9 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
   private setTooltipType() {
     switch (this.config.tooltipType) {
       case TooltipTypes.Rect:
-        if (this.config.fillColor) {
-          this.renderer.setStyle(this.tooltip, 'background-color', this.config.fillColor);
-        }
         this.renderer.addClass(this.tooltip, 'tooltip-rectangle');
         break;
       case TooltipTypes.Balloon:
-        if (this.config.fillColor) {
-          this.renderer.setStyle(this.tooltip, 'background-color', this.config.fillColor);
-        }
         this.renderer.addClass(this.tooltip, 'tooltip-balloon');
         break;
       default:
@@ -471,8 +472,15 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
   private disable() {
     if (this.disabled) {
       this.renderer.addClass(this.slider, 'disabled');
-    } else {
+      this.renderer.removeStyle(this.slider, 'background-color');
+      this.renderer.removeStyle(this.thumb, 'background-color');
+      this.renderer.removeStyle(this.fill, 'background-color');
+      if (this.config.tooltipType === TooltipTypes.Rect || this.config.tooltipType === TooltipTypes.Balloon) {
+        this.renderer.removeStyle(this.tooltip, 'background-color');
+      }
+    } else if (this.disabled === false) {
       this.renderer.removeClass(this.slider, 'disabled');
+      this.setColors();
     }
   }
 

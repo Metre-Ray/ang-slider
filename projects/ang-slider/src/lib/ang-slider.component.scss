@@ -22,7 +22,7 @@
   z-index: 1;
   width: 8px;
   height: 20px;
-  background: blue;
+  background: rgb(1, 1, 66);
   border: 1px solid white;
   border-radius: 10%;
 }
@@ -33,7 +33,7 @@
   left: 0;
   height: 100%;
   width: 0;
-  background: red;
+  background: rgb(1, 1, 66);
   border-radius: 5px;
 }
 
@@ -147,7 +147,7 @@
 .disabled {
   background-color: grey;
 
-  .slider-fill {
+  .slider-fill, .thumb, .tooltip {
     background-color: #3c3c3c;
   }
 }
