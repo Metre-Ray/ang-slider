@@ -1,11 +1,15 @@
 {
   "name": "ang-slider",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "peerDependencies": {
-    "@angular/common": "~8.2.14",
-    "@angular/core": "~8.2.14"
+    "@angular/common": "^9.0.4",
+    "@angular/core": "^9.0.4"
   },
   "license": "MIT",
-  "keywords": ["slider", "angular"],
+  "keywords": [
+    "slider",
+    "angular",
+    "angular9"
+  ],
   "homepage": "https://github.com/Metre-Ray/ang-slider/tree/master/projects/ang-slider"
 }

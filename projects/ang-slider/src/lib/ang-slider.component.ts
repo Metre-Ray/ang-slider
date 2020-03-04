@@ -97,7 +97,7 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     private ref: ElementRef,
   ) {}
 
-  ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: SimpleChanges): void {
     if (changes.value && changes.value.previousValue !== this.value && this.slider) {
       this.setSliderPositionFromValue(this.value, false);
     }
@@ -112,7 +112,7 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  ngAfterViewInit() {
+  public ngAfterViewInit(): void {
     const element = this.ref.nativeElement;
     this.slider = element.querySelector('.slider');
     this.thumb = element.querySelector('.thumb');
@@ -129,20 +129,20 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     this.disable();
   }
 
-  public get ticksArray() {
+  public get ticksArray(): void | string[] {
     if (this.config.tickNumber) {
       return Array(this.config.tickNumber).fill('');
     }
     return;
   }
 
-  public onWindowResize() {
+  public onWindowResize(): void {
     this.setStylesFromConfig();
     this.setSliderPositionFromValue(this.value);
     this.setTickStyles(this.valueToPosition(this.value), true);
   }
 
-  public onSliderClick(event: MouseEvent) {
+  public onSliderClick(event: MouseEvent): void {
     if ((event.target as HTMLElement).classList[0] === 'thumb') {
       return;
     }
@@ -152,7 +152,7 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     this.valueChange.emit(this.value);
   }
 
-  public onKeyDown(event: KeyboardEvent) {
+  public onKeyDown(event: KeyboardEvent): void {
     switch (event.keyCode) {
       case 39:    // right arrow
       case 38:    // up arrow
@@ -175,13 +175,13 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  public onMouseDown(event: MouseEvent) {
+  public onMouseDown(event: MouseEvent): void {
     event.preventDefault();
     document.addEventListener('mousemove', this.onMouseMove);
     document.addEventListener('mouseup', this.onMouseUp);
   }
 
-  private addClassToFixFocusStyles(element: HTMLElement) {
+  private addClassToFixFocusStyles(element: HTMLElement): void {
     element.addEventListener('mousedown', () => {
       this.slider.classList.add('using-mouse');
     });
@@ -222,7 +222,7 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     return value;
   }
 
-  private setSliderPositionFromValue(value: number, shouldEmit: boolean = false) {
+  private setSliderPositionFromValue(value: number, shouldEmit: boolean = false): void {
     const position = this.valueToPosition(value);
     this.setValue(value);
     this.setSliderPosition(position);
@@ -233,14 +233,14 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  private setSliderPositionFromCoordinate(position: number) {
+  private setSliderPositionFromCoordinate(position: number): void {
     const value = this.positionToValue(position);
     this.setValue(value);
     this.setSliderPosition(position);
     this.setTickStyles(position);
   }
 
-  private setSliderPosition(position: number) {
+  private setSliderPosition(position: number): void {
     this.renderer.setStyle(this.thumb, 'left', `${position}px`);
     this.renderer.setStyle(this.fill, 'width', `${position + this.thumb.offsetWidth / 2}px`);
     this.setTooltipPositionAndLabel(position);
@@ -311,7 +311,7 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  private determibeTicksPosition() {
+  private determibeTicksPosition(): void {
     if (this.ticks) {
       this.ticksPosition = [];
       this.ticks.forEach((tick: HTMLElement) => {
@@ -321,7 +321,7 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  private calculateTickPosition(tick: HTMLElement) {
+  private calculateTickPosition(tick: HTMLElement): number {
     const tickBox = tick.getBoundingClientRect();
     const containerBox = this.ticksContainer.getBoundingClientRect();
     const offset = this.thumb.offsetWidth / 2;
@@ -341,7 +341,7 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     return tickPos;
   }
 
-  private changeValue(num: number) {
+  private changeValue(num: number): void {
     const step = (this.config.max - this.config.min) / 20;
     this.setValue(this.value + num * step);
     this.setSliderPositionFromValue(this.value, true);
@@ -361,7 +361,7 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     document.removeEventListener('mousemove', this.onMouseMove);
   }
 
-  private checkConfig() {
+  private checkConfig(): void {
     if (Math.abs(this.degree) > 90) {
       console.log('degree must be in range from -90 to 90');
       this.degree = 0;
@@ -403,7 +403,7 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     this.setDegree();
   }
 
-  private setValue(val: number) {
+  private setValue(val: number): void {
     if (val > this.config.max) {
       this.value = this.config.max;
     } else if (val < this.config.min) {
@@ -417,7 +417,7 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
   //   return this.value;
   // }
 
-  private setColors() {
+  private setColors(): void {
     if (this.config.fillColor && !this.disabled) {
       if (this.config.thumbType !== ThumbTypes.Custom) {
         this.renderer.setStyle(this.thumb, 'background-color', this.config.fillColor);
@@ -432,7 +432,7 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  private setThumbType() {
+  private setThumbType(): void {
     if (this.config.thumbType) {
       switch (this.config.thumbType) {
         case ThumbTypes.Circle:
@@ -451,7 +451,7 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  private setTooltipType() {
+  private setTooltipType(): void {
     switch (this.config.tooltipType) {
       case TooltipTypes.Rect:
         this.renderer.addClass(this.tooltip, 'tooltip-rectangle');
@@ -464,12 +464,12 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  private setThumbToStartPosition() {
+  private setThumbToStartPosition(): void {
     this.setSliderPositionFromValue(this.config.min);
     this.setTooltipPositionAndLabel(this.valueToPosition(this.config.min), this.value);
   }
 
-  private disable() {
+  private disable(): void {
     if (this.disabled) {
       this.renderer.addClass(this.slider, 'disabled');
       this.renderer.removeStyle(this.slider, 'background-color');
@@ -484,7 +484,7 @@ export class AngSliderComponent implements OnChanges, AfterViewInit {
     }
   }
 
-  private setDegree() {
+  private setDegree(): void {
     if (this.degree || this.degree === 0) {
       this.renderer.setStyle(this.slider, 'transform', `rotate(${this.degree}deg)`);
     }

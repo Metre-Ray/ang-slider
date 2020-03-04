@@ -1,8 +1,6 @@
 # AngSlider
 
-Slider built with Angular 8.
-
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.14.
+Slider built with Angular 9.
 
 
 ## Examples
@@ -100,7 +98,8 @@ You can use two-way data binding for `value`: `[(value)]="someValue"`.
 
 ## Setting styles
 
-Parameters in `config` are more important than styles.
+Styles can be set in `config` or using css classes (example below).
+Parameters in `config` are more important than css styles.
 
 Example of setting colors of the fill and the thumb (but to apply this styles you need fillColor and backgroundColor in config to be empty rows):
 ```scss
@@ -120,4 +119,4 @@ Available classes: `slider`, `thumb`, `tootlip`, `tooltip-text`, `slider-fill`, 
 
 For custom thumb use styles and thumbType: 'custom'.
 
-In case of angles 90 or -90 height of the slider is determined by width of the slider.
+In case of angles 90 or -90 height of the slider is determined by `width` property .
